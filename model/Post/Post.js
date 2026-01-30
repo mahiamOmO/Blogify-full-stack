@@ -3,23 +3,9 @@ const mongoose = require('mongoose');
 //schema
 
 const postSchema = new mongoose.Schema({
-    title: {
+    name: {
         type: String,
         require: true,
-    },
-    image: {
-        type: String,
-        deafult: "",
-
-    },
-    claps: {
-        type: Number,
-        default: 0,
-    },
-    content: {
-        type: String,
-        required: true,
-
     },
 
     author: {
@@ -31,40 +17,12 @@ const postSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    postViews: {
-        type: Number,
-        default: 0,
-    },
-     category: {
+
+     posts:  {
         type: mongoose.Schema.Types.objectId,
-        required: true,
-        ref: "Category",
-    },
-    scheduledPublished: {
-        type: Date,
-        default: null,
+        ref: "Post",
     },
 
-     likes:  [
-        {
-        type: mongoose.Schema.Types.objectId,
-        ref: "User",
-    },
-     ],
-
-     dislikes: [
-        {
-        type: mongoose.Schema.Types.objectId,
-        ref: "User",
-    },
-     ],
-     comments: [
-     {
-        type: mongoose.Schema.Types.objectId,
-        required: true,
-        ref: "User",
-    },
-    ],
 },
      {
       
