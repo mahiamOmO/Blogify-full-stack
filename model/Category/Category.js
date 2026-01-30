@@ -74,7 +74,7 @@ const postSchema = new mongoose.Schema({
     );
 
 //compile schema to model 
-const Post = mongoose.model("Post",postSchema);
+const Post = mongoose.model("Category",categorySchema);
 module.exports = Post;
 
 
