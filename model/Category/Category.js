@@ -1,8 +1,8 @@
-cosnt mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 //schema
 
-const postSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     title: {
         type: String,
         require: true,
@@ -74,7 +74,7 @@ const postSchema = new mongoose.Schema({
     );
 
 //compile schema to model 
-const Post = mongoose.model("Category",categorySchema);
-module.exports = Post;
+const Category = mongoose.model("Category",categorySchema);
+module.exports = Category;
 
 
