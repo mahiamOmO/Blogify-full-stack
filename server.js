@@ -6,6 +6,9 @@ const express = require('express');
 
 const app = express();
 
+// Routes
+app.use('/',userRouter);
+
 const server = http.createServer(app);
 //? Start the server
 
