@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require('../../model/User/User'); 
 
 // @desc    Register a new user
@@ -49,36 +50,43 @@ exports.register = async (req, res) => {
     }
 };
 
-// @desc    Register a new user
+// @desc    Login user
 // @route   POST /api/v1/users/login
 // @access  Public
 
-exports.login = async(req,res) => {
+exports.login = async (req, res) => {
     try {
-        //? get the login details
-        const {username,password} = req.body;
-        //! check if exists 
-        const user = await User.findOne({username});
-        if(!user) {
-            throw new Error("Invalid login credentials");
+        const { username, password } = req.body;
+
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({
+                status: 'failed',
+                message: 'Invalid login credentials',
+            });
         }
 
-        //cpmpare the hashed password with the one the request
-        const isMatched = await bcrypt.compare(password,user?.password);
-        if(!isMatched) {
-            throw new Error("Invalid login credentials");
+        const isMatched = await bcrypt.compare(password, user.password);
+        if (!isMatched) {
+            return res.status(400).json({
+                status: 'failed',
+                message: 'Invalid login credentials',
+            });
         }
 
-        //Update the last login 
-        user.lastlogin = new Date();
-        res.json({
-            status: "success",
+        user.lastLogin = new Date();
+        await user.save();
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Login successful',
             user,
         });
 
-    }catch(error) {
-        res.json({
-            status: "failed",
-            message: error?.message
-        })
-}
+    } catch (error) {
+        res.status(500).json({
+            status: 'failed',
+            message: error.message,
+        });
+    }
+};
