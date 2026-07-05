@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const User = require('../../model/User/User'); 
 
 // @desc    Register a new user
@@ -7,25 +6,31 @@ const User = require('../../model/User/User');
 exports.register = async (req, res) => {
     try {
         const { username, password, email } = req.body;
-        
-        // Check if user already exists in the database
-        const user = await User.findOne({ username });
-        if (user) {
+
+        // Check if username or email already exists.
+        const existingUser = await User.findOne({
+            $or: [{ username }, { email }],
+        });
+
+        if (existingUser) {
+            let duplicateField = 'User';
+            if (existingUser.username === username) {
+                duplicateField = 'Username';
+            } else if (existingUser.email === email) {
+                duplicateField = 'Email';
+            }
+
             return res.status(400).json({
-                status: 'failed',      
-                message: "User Already Exists",
+                status: 'failed',
+                message: `${duplicateField} already exists`,
             });
         }
 
-        // Hash the plain password using bcryptjs
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Create a new user instance with the hashed password
+        // Password hashing is handled by the User model pre-save hook.
         const newUser = new User({
             username,
             email,
-            password: hashedPassword,
+            password,
         });
 
         await newUser.save();

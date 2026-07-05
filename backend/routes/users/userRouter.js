@@ -5,5 +5,6 @@ const userRouter = express.Router();
 
 // Register
 userRouter.post('/register', register);
+userRouter.post('/api/v1/users/register', register);
 
 module.exports = userRouter;
