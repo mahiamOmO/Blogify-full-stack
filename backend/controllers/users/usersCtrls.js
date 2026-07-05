@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../model/User/User'); 
+const generateToken = require('../../utils/generateToken');
 
 // @desc    Register a new user
 // @route   POST /api/v1/users/register
