@@ -5,14 +5,14 @@ const userRouter = express.Router();
 
 // Register
 userRouter.post('/register', register);
-userRouter.post('/api/v1/users/register', register);
+userRouter.post('/register', register);
 
 // Login
 userRouter.post('/login', login);
-userRouter.post('/api/v1/users/login', login);
+userRouter.post('/login', login);
 
 // Profile
 userRouter.get('/profile', getProfile);
-userRouter.get('/api/v1/users/profile/:id', getProfile);
+userRouter.get('/profile/:id', getProfile);
 
 module.exports = userRouter;
