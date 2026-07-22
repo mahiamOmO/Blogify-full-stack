@@ -96,18 +96,17 @@ exports.login = async (req, res) => {
 // @route   POST /api/v1/users/profile/:id
 // @access  Public
 
-exports.getProfile = async(req,res) => {
+exports.getProfile = async (req, res) => {
+  try {
     res.json({
-        status: 'success',
-        message: "Profile fetched",
-        data: "user data",
+      status: "success",
+      message: "Profile fetched",
+      data: "user data",
     });
- } catch (error) {({
+  } catch (error) {
     res.json({
-        status: "failed",
-        message: error?.message,
+      status: "failed",
+      message: error?.message,
     });
- }
- 
-    
+  }
 };
