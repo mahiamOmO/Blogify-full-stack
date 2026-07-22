@@ -23,11 +23,12 @@ const isLoggin = (req, res, next) => {
         console.log(decoded);
         req.user = decoded.user;
         console.log(req.user);
-        next();
     });
-    
-    // Save the user
+     // Save the user
     // Send the user
+
+     next();
+   
 };
 
 module.exports = isLoggin;
